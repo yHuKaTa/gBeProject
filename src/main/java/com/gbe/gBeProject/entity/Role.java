@@ -1,5 +1,6 @@
 package com.gbe.gBeProject.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,8 +19,8 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String role;
+    private String roleName;
     @ManyToMany (mappedBy = "roles")
-
+    @JsonBackReference
     private Set<Customer> customers;
 }

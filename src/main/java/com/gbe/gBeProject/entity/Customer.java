@@ -38,6 +38,7 @@ public class Customer {
     private Set<Order> orders;
 
     @ManyToMany
+    @JsonManagedReference
     @JoinTable(
             name = "customer_roles",
             joinColumns = {@JoinColumn(name = "customer_id")},

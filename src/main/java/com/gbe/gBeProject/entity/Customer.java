@@ -36,4 +36,12 @@ public class Customer {
     @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
     @JsonManagedReference
     private Set<Order> orders;
+
+    @ManyToMany
+    @JoinTable(
+            name = "customer_roles",
+            joinColumns = {@JoinColumn(name = "customer_id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id")}
+    )
+    private Set<Role> roles;
 }

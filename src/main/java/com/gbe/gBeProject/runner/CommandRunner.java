@@ -1,13 +1,7 @@
 package com.gbe.gBeProject.runner;
 
-import com.gbe.gBeProject.entity.Customer;
-import com.gbe.gBeProject.entity.Email;
-import com.gbe.gBeProject.entity.Order;
-import com.gbe.gBeProject.entity.Product;
-import com.gbe.gBeProject.repository.CustomerRepository;
-import com.gbe.gBeProject.repository.EmailRepository;
-import com.gbe.gBeProject.repository.OrderRepository;
-import com.gbe.gBeProject.repository.ProductRepository;
+import com.gbe.gBeProject.entity.*;
+import com.gbe.gBeProject.repository.*;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -26,6 +20,8 @@ public class CommandRunner implements CommandLineRunner {
     ProductRepository productRepository;
     @Autowired
     OrderRepository orderRepository;
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -66,6 +62,20 @@ public class CommandRunner implements CommandLineRunner {
         orderRepository.save(order1);
         Set<Order> orders = Set.of(order,order1);
         customer.setOrders(orders);
+
+        Role role = new Role();
+        role.setRole("VIP");
+        Role role1 = new Role();
+        role1.setRole("Standart");
+
+        role.setCustomers(Set.of(customer));
+        role1.setCustomers(Set.of(customer));
+
+        roleRepository.save(role);
+        roleRepository.save(role1);
+
+        customer.setRoles(Set.of(role,role1));
+
         customerRepository.save(customer);
     }
 }

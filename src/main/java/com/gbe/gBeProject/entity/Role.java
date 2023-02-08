@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -21,6 +22,5 @@ public class Role {
 
     private String role;
     @ManyToMany (mappedBy = "roles")
-    @JsonBackReference
-    private Set<Customer> customers;
+    private Set<Customer> customers = new HashSet<>();
 }

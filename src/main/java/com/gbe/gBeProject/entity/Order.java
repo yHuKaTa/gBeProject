@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -23,7 +24,7 @@ public class Order {
 
     @OneToMany
     @JoinColumn(name = "order_id")
-    private Set<Product> products;
+    private Set<Product> products = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "customer_id")

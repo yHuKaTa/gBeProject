@@ -1,0 +1,13 @@
+package com.gbe.gBeProject;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class GBeProjectApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(GBeProjectApplication.class, args);
+	}
+
+}

@@ -20,4 +20,8 @@ public class Email {
     @Column(name = "email")
     private String emailAddress;
 
+    public Email(String email) {
+        this.emailAddress = email;
+    }
+
 }

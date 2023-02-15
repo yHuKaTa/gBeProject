@@ -3,27 +3,25 @@ package com.gbe.gBeProject.controller;
 import com.gbe.gBeProject.entity.Customer;
 import com.gbe.gBeProject.exception.UserNotFoundException;
 import com.gbe.gBeProject.model.CustomerRequest;
-import com.gbe.gBeProject.repository.CustomerRepository;
-import com.gbe.gBeProject.service.CustomerService;
+import com.gbe.gBeProject.service.impl.CustomerServiceImpl;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/customer")
 public class CustomerController {
     @Autowired
-    CustomerService customerService;
+    CustomerServiceImpl customerService;
 
     @GetMapping(path = "/{id}")
     Customer getCustomer(@PathVariable Long id) throws UserNotFoundException {
         return customerService.findById(id);
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    Customer saveCustomer(@RequestBody CustomerRequest customerRequest) {
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, path = "/create")
+    Customer saveCustomer(@Valid @RequestBody CustomerRequest customerRequest) {
         Customer customer = customerRequest.convert();
         return customerService.saveCustomer(customer);
     }

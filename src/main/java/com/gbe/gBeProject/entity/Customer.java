@@ -1,15 +1,11 @@
 package com.gbe.gBeProject.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
-
 import java.time.Instant;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Builder
@@ -34,23 +30,24 @@ public class Customer {
     @Column(name = "customer_last_name", length = 50)
     private String customerLastName;
 
+    private String password;
+
     @OneToOne (cascade = CascadeType.ALL)
     @JoinColumn(name = "email")
-    @jakarta.validation.constraints.Email
     private Email email;
 
     private Instant createdAt;
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
     @JsonManagedReference
-    private Set<Order> orders;
+    private Set<Order> orders = Objects.requireNonNullElseGet(this.orders, HashSet::new);
 
-    @ManyToMany
-
+    @ManyToMany (fetch = FetchType.EAGER)
+    @JsonManagedReference
     @JoinTable(
-            name = "customer_roles",
+            name = "user_roles",
             joinColumns = {@JoinColumn(name = "customer_id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id")}
+            inverseJoinColumns = {@JoinColumn(name = "user_role_id")}
     )
-    private Set<Role> roles = new HashSet<>();
+    private Set<Role> userRoles = Objects.requireNonNullElseGet(this.userRoles, HashSet::new);
 }

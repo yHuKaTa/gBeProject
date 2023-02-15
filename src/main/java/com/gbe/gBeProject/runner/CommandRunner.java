@@ -2,12 +2,10 @@ package com.gbe.gBeProject.runner;
 
 import com.gbe.gBeProject.entity.*;
 import com.gbe.gBeProject.repository.*;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.util.HashSet;
 import java.util.Set;
 
 @Component
@@ -26,7 +24,7 @@ public class CommandRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         Email email = new Email();
-        email.setEmailAddress("aaa@bbb.gg");
+        email.setEmail("aaa@bbb.gg");
         emailRepository.save(email);
 
         Customer customer = new Customer();
@@ -34,7 +32,7 @@ public class CommandRunner implements CommandLineRunner {
         customer.setCustomerLastName("Mladenov");
         customer.setEmail(email);
 
-        customerRepository.save(customer);
+
 
         Product potato = new Product();
         potato.setProduct("Potato");
@@ -58,24 +56,27 @@ public class CommandRunner implements CommandLineRunner {
         Order order1 = new Order();
         order1.setProducts(Set.of(tomato1,onion1));
         order1.setCustomer(customer);
-        orderRepository.save(order);
-        orderRepository.save(order1);
+
         Set<Order> orders = Set.of(order,order1);
         customer.setOrders(orders);
 
         Role role = new Role();
-        role.setRole("VIP");
+        role.setAuthority("VIP");
         Role role1 = new Role();
-        role1.setRole("Standart");
+        role1.setAuthority("Standart");
 
-        role.setCustomers(Set.of(customer));
-        role1.setCustomers(Set.of(customer));
+//        role.setCustomers(Set.of(customer));
+//        role1.setCustomers(Set.of(customer));
 
         roleRepository.save(role);
         roleRepository.save(role1);
 
-        customer.setRoles(Set.of(role,role1));
-
+        customer.setUserRoles(Set.of(role,role1));
         customerRepository.save(customer);
+
+        orderRepository.save(order);
+        orderRepository.save(order1);
+
+
     }
 }

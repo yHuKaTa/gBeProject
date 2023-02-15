@@ -19,6 +19,6 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Role getByAuthority(String roleName) throws RoleNotFoundException {
-        return roleRepository.findByAuthority(roleName).orElseThrow(RoleNotFoundException::new);
+        return roleRepository.findByAuthority(roleName.toUpperCase()).orElseThrow(RoleNotFoundException::new);
     }
 }

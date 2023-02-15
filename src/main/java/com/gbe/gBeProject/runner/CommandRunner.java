@@ -2,6 +2,7 @@ package com.gbe.gBeProject.runner;
 
 import com.gbe.gBeProject.entity.*;
 import com.gbe.gBeProject.repository.*;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -21,6 +22,7 @@ public class CommandRunner implements CommandLineRunner {
     @Autowired
     private RoleRepository roleRepository;
 
+    @Transactional
     @Override
     public void run(String... args) throws Exception {
         Email email = new Email();
@@ -31,8 +33,6 @@ public class CommandRunner implements CommandLineRunner {
         customer.setCustomerName("Petkan");
         customer.setCustomerLastName("Mladenov");
         customer.setEmail(email);
-
-
 
         Product potato = new Product();
         potato.setProduct("Potato");
@@ -71,11 +71,14 @@ public class CommandRunner implements CommandLineRunner {
         roleRepository.save(role);
         roleRepository.save(role1);
 
-        customer.setUserRoles(Set.of(role,role1));
-        customerRepository.save(customer);
-
         orderRepository.save(order);
         orderRepository.save(order1);
+
+        customer.setUserRoles(Set.of(role,role1));
+
+        customerRepository.save(customer);
+
+
 
 
     }
